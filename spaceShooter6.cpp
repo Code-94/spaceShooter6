@@ -11,6 +11,12 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 1920, 1080 }), "Space");
 
+    Engine engine;
+    engine.setPosition({ 0,0 });
+    engine.setDirection({ 10,0 });
+    engine.setSpeed(700);
+
+
     Player spaceShip;
     spaceShip.Load({ 960,1000 });
     EnemyManager enemies;
@@ -38,7 +44,9 @@ int main()
                 }
             }
 
-            window.clear();
+            spaceShip.HandleEvent();
+
+            window.clear(sf::Color::Black);
             window.draw(spaceShip);
             window.draw(enemies);
             window.display();
