@@ -4,14 +4,25 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "Player.h"
+#include "EnemyManager.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 1920, 1080 }), "Space");
 
+    Player spaceShip;
+    spaceShip.Load({ 960,1000 });
+    EnemyManager enemies;
+
+    sf::Clock clock;
+
+    window.setVerticalSyncEnabled(true);
     // run the program as long as the window is open
     while (window.isOpen())
     {
+        sf::Time deltaTime = clock.restart();
+
         // check all the window's events that were triggered since the last iteration of the loop
         while (const std::optional event = window.pollEvent())
         {
@@ -19,18 +30,19 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+        else if(const auto* keyPressed = event->getIf<sf::Event::Keypressd>())
+        {
+            if (keyPressed->scancode == sf::Keyboard::Scancode::E)
+            {
+                enemies.SpawnEntity({ 400,0 });
+            }
+            }
         window.clear();
+
+        window.draw(spaceShip);
+        window.draw(enemies);
         window.display();
     }
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
