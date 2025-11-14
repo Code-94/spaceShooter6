@@ -48,7 +48,7 @@ bool Player::CheckCollisions(std::vector<Entity*>& others)
 }
 void Player::CheckProjectileCollisions(std::vector<Entity*>& others)
 {
-
+	
 	auto bullets = projectileManager.getEntity();
 
 	for (auto& bullet : bullets)
@@ -68,6 +68,7 @@ void Player::CheckProjectileCollisions(std::vector<Entity*>& others)
 
 			if (bullet->getBounds().findIntersection(other->getBounds()))
 			{
+				//sound.SoundLoadPlay(buffer_, "data\\soundEffect\\mixkit-falling-hit-757.wav");
 				other->stillAlive = false;
 				bullet->stillAlive = false;
 			}
