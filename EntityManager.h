@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include "Projectile.h"
+#include "Asteroid.h"
 
 class EntityManager : public sf::Drawable
 {

@@ -19,5 +19,5 @@ inline void Projectile::Move(float dt)
 
 inline void Projectile::Load()
 {
-	Entity::Load("data\\sprite\\laserGreen03.png", { 0,-1 }, 600);
+	Entity::Load("data\\sprite\\laserGreen03.png", { 0,-1 }, 400);
 }

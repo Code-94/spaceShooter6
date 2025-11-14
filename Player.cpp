@@ -1,10 +1,14 @@
 #include "Player.h"
+#include <iostream>
 
 
 
-void Player::Load(sf::Vector2f) 
+void Player::Load(sf::Vector2f position) 
 {
 	texture.loadFromFile("data\\sprite\\playerShip3_red.png");
+	engine_.setPosition(position);
+	engine_ .setDirection({ 10,0 });
+	engine_.setSpeed(700);
 
 	rect_.setTexture(&texture);
 	rect_.setSize({ static_cast<float>(texture.getSize().x), static_cast<float>(texture.getSize().y) });
@@ -13,7 +17,12 @@ void Player::Load(sf::Vector2f)
 
 void Player::Update(sf::RenderWindow& window, float dt)
 {
+	
 	rect_.setPosition(engine_.Move(dt));
+
+	//std::cout << "rect position: " << rect_.getPosition().x << "," << rect_.getPosition().y << std::endl;
+	
+	//rect_.setPosition({ 200,200 });
 	projectileManager.Update(window, dt);
 }
 
