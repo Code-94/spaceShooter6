@@ -19,5 +19,5 @@ inline void Asteroid::Move(float dt)
 
 inline void Asteroid::Load()
 {
-	Entity::Load("data\\sprite\\meteorGrey_big4.png", { 0,1 }, 200);
+	Entity::Load("data\\sprite\\meteorGrey_big2.png", { 0,1 }, 200);
 }

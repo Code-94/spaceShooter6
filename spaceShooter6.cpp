@@ -17,7 +17,7 @@ int main()
 
     std::uniform_int_distribution<> distribX(0, 1920);
     // Les positions Y peuvent aller de 0 à la hauteur de la fenêtre
-    std::uniform_int_distribution<> distribY(0, 1080);
+    
 
     Engine engine;
    
@@ -29,6 +29,15 @@ int main()
     AsteroidManager meteor;
     
     sf::Clock clock;
+    sf::Clock enemyClock;
+    sf::Clock meteorClock;
+    //sf::Clock projectileClock;
+    
+
+    const sf::Time spawnEnemyInterval = sf::seconds(0.5f);
+    const sf::Time spawnMeteorInterval = sf::seconds(1.0f);
+    //const sf::Time spawnProjectileInterval = sf::seconds(0.2f);
+
 
     window.setVerticalSyncEnabled(true);
     // run the program as long as the window is open
@@ -46,17 +55,36 @@ int main()
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                     window.close();
 
+                if (enemyClock.getElapsedTime() >= spawnEnemyInterval)
+                {
+                    float randomX = static_cast<float>(distribX(gen));
+                    enemies.SpawnEntity({ randomX,0 });
+                    meteor.SpawnEntity({ randomX,0 });
+                    enemyClock.restart();
+                }
+
+                if (meteorClock.getElapsedTime() >= spawnMeteorInterval)
+                {
+                    float randomX = static_cast<float>(distribX(gen));
+                    
+                    meteor.SpawnEntity({ randomX,0 });
+                    meteorClock.restart();
+                }
+
+
                 /*if (keyPressed->scancode == sf::Keyboard::Scancode::E)
                 {
                     enemies.SpawnEntity({ 400,0 });
                 }*/
 
-                float randomX = static_cast<float>(distribX(gen));
-                float randomY = static_cast<float>(distribY(gen));
+                //float randomX = static_cast<float>(distribX(gen));
+                //float randomY = static_cast<float>(distribY(gen));
 
                 // Définir la nouvelle position du sprite
-                enemies.SpawnEntity({ randomX, randomY });
-                //enemies.SpawnEntity({ 400,0 });
+                //enemies.SpawnEntity({ randomX, randomY });
+                
+                
+                
             }
             
             
@@ -65,8 +93,10 @@ int main()
         
         spaceShip.HandleEvent();
         spaceShip.CheckCollisions(enemies.getEntity());
+        spaceShip.CheckCollisions(meteor.getEntity());
         
         spaceShip.CheckProjectileCollisions(enemies.getEntity());
+        spaceShip.CheckProjectileCollisions(meteor.getEntity());
 
         spaceShip.HandleEvent();
 
@@ -74,6 +104,7 @@ int main()
 
         spaceShip.Update(window,delta.asSeconds());
         enemies.Update(window, delta.asSeconds());
+        meteor.Update(window, delta.asSeconds());
         
         
         

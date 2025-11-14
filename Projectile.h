@@ -4,6 +4,9 @@
 
 class Projectile : public Entity
 {
+
+	/*sf::Clock projectileClock;
+	const sf::Time spawnProjectileInterval = sf::seconds(0.2f);*/
 public:
 	void Move(float)override;
 	void Load()override;
